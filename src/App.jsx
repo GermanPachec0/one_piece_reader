@@ -6,57 +6,57 @@ import './App.css';
 
 function App() {
     const [chapters, setChapters] = useState([]);
-    const [chapter, setChapter] = useState({ pages: [] }); // Initialize chapter with pages property
-    const [selectedOption, setSelectedOption] = useState(useState());
+    const [chapter, setChapter] = useState({ pages: [] });
+    const [selectedOption, setSelectedOption] = useState();
 
-    useEffect(() => {
-        const fetchChapters = async () => {
+    const fetchChapters = async () => {
             try {
                 const response = await axios.get('http://localhost:1234/chapters');
                 if (response.data) {
                     setChapters(response.data);
+
                 }
             } catch (error) {
                 console.error('Error fetching chapters:', error);
             }
         };
-
-        fetchChapters();
-    }, []);
-
-const fetchChapterDetails = async (chapterId) => {
-    try {
-        const response = await axios.get(`http://localhost:1234/chapter_details/${chapterId}`);
-        if (response.data) {
-            setChapter(response.data);
+ 
+    const fetchChapterDetails = async (chapterId) => {
+        try {
+            const response = await axios.get(`http://localhost:1234/chapter_details/${chapterId}`);
+            if (response.data) {
+                setChapter(response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching chapter details:', error);
         }
-    } catch (error) {
-        console.error('Error fetching chapter details:', error);
-    }
-};
+    };
 
-const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
-    fetchChapterDetails(event.target.value);
-};
-    console.log(chapters);
+    const handleSelectChange = (event) => {
+        setSelectedOption(event.target.value);
+        fetchChapterDetails(event.target.value);
+    };
+
+    useEffect(() =>{fetchChapters()},[])
 
     return (
-  <div>
-      <div className="select-container">
-        <label htmlFor="chapter-select">Select a chapter:</label>
-        <select
-          id="chapter-select"
-          value={selectedOption}
-          onChange={handleSelectChange}
-        >
-          {chapters.map((option) => (
-            <option key={option.text} value={option.value}>
-              {option.text}
-            </option>
-          ))}
-        </select>
-      </div>
+        <div>
+            <div className="select-container">
+                <label htmlFor="chapter-select">Select a chapter:   </label>
+                <option defaultValue='01'></option>
+                <select
+                    id="chapter-select"
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                >
+                    {chapters.map((option) => (
+                        <option key={option.text} value={option.value}>
+                            {option.text}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <br></br>
             <Carousel 
                 showThumbs={true}
                 showStatus={true}
@@ -67,7 +67,7 @@ const handleSelectChange = (event) => {
                     </div>
                 ))}
             </Carousel>
-    </div>
+        </div>
     );
 }
 
