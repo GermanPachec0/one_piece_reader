@@ -11,7 +11,7 @@ function App() {
 
     const fetchChapters = async () => {
             try {
-                const response = await axios.get('http://localhost:1234/chapters');
+                const response = await axios.get('https://fc50fpb6-1234.brs.devtunnels.ms/chapters');
                 if (response.data) {
                     setChapters(response.data);
 
@@ -23,7 +23,7 @@ function App() {
  
     const fetchChapterDetails = async (chapterId) => {
         try {
-            const response = await axios.get(`http://localhost:1234/chapter_details/${chapterId}`);
+            const response = await axios.get(`https://fc50fpb6-1234.brs.devtunnels.ms/chapter_details/${chapterId}`);
             if (response.data) {
                 setChapter(response.data);
             }
